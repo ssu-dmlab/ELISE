@@ -1,6 +1,6 @@
 Code
 [ ] 코드 내부 주석 및 클래스 개요, input 달기
-[ ] MLflow 관련 코드 삭제하기
+[O] MLflow 관련 코드 삭제하기
 [ ] 모델 Pretrain 가중치 만들어서 넣기
 REPO
 [O] Conda 환경 구축 및 env 생성
