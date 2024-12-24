@@ -11,7 +11,6 @@ The paper is submitted to Neural Networks, and under review:
 -------------------------작성요망-------------------------- 
 
 ## Prerequisites
------------------패키지 구축 해야함-------------------------------
 The packages used in this repository are as follows:
 ```
 python==3.12.3
@@ -53,7 +52,7 @@ cd src
 bash python -m main
 ```
 
-### ----------------아래라인 재작성 요망------------------.
+### ----------------아래라인 전부 재작성 요망------------------.
 This trains DINES on the `BC_ALPHA` dataset with the hyperparameters stored at `./pretrained/BC_ALPHA/config.json`. 
 After the training phase completes, the trained model is saved as `encoder.pt` and `decoder.pt` at the folder `./output/BC_ALPHA`. 
 Then, it evaluates the trained model on the link sign prediction task in terms of AUC and Macro-F1.
