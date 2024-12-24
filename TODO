@@ -3,8 +3,8 @@ Code
 [ ] MLflow 관련 코드 삭제하기
 [ ] 모델 Pretrain 가중치 만들어서 넣기
 REPO
-[ ] Conda 환경 구축 및 env 생성
-[ ] 깃허브에 push 하기.
+[O] Conda 환경 구축 및 env 생성
+[O] 깃허브에 push 하기.
 README
 [ ] over-view 작성
 [ ] Dataset 링크 변경
