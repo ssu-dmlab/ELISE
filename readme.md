@@ -18,6 +18,8 @@ python==3.12.3
 numpy==1.26.4
 pytorch==2.2.1
 tqdm==4.66.4
+loguru==0.7.2
+fire==0.7.0
 ```
 
 You can create a conda environment with these packages by typing the following command in your terminal:
