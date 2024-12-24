@@ -32,17 +32,17 @@ You can find raw datasets at `./datasets` folder where the file's name is `${DAT
 The `${DATASET}` is one of `amazon-dm`, `bonanza`, `ml-1m` and `review`.
 This file contains the list of signed edges where each line consists of a tuple of `(src, dst, sign)`.
 The details of datasets are provided in the following table:
-|**Dataset**|**$\|\mathcal{U}\|$**||**$\|\mathcal{V}\|$**|**$\|\mathcal{E}\|$**|**$\|\mathcal{E}^{+}\|$**|**$\|\mathcal{E}^{-}\|$**|**$p$(+)**|
-|:-:|-:|-:|-:|-:|:-:|
-|[Review](https://snap.stanford.edu/data/soc-sign-bitcoin-alpha.html)|182|304|1,170|464|706|40.3|
-|[Bonanza](https://snap.stanford.edu/data/soc-sign-bitcoin-otc.html)|7,919|1,973|36,543|35,805|738|98|
-|[ML-1m](https://snap.stanford.edu/data/wiki-RfA.html)|6,040|3,706|1,000,209|836,478|163,731|83.6|
-|[Amazon-DM](http://konect.cc/networks/slashdot-zoo)|11,796|16,565|169,781|165,777|4,004|97.6|
-* $\|\mathcal{U}\|$: the number of Users
-* $\|\mathcal{V}\|$: the number of Items
-* $\|\mathcal{E}\|$: the number of edges
-* $\|\mathcal{E}^{+}\|$ and $\|\mathcal{E}^{-}\|$: the numbers of positive and negative edges, respectively
-* $p$(+): the ratio of positive edges
+| **Dataset**                                    | **$\|\mathcal{U}\|$** | **$\|\mathcal{V}\|$** | **$\|\mathcal{E}\|$** | **$\|\mathcal{E}^{+}\|$** | **$\|\mathcal{E}^{-}\|$** | **$p$(+)%** |
+|:----------------------------------------------:|----------------------:|----------------------:|----------------------:|-------------------------:|-------------------------:|------------:|
+| [Review](https://snap.stanford.edu/data/soc-sign-bitcoin-alpha.html)  |                   182 |                   304 |                 1,170 |                     464 |                     706 |        40.3 |
+| [Bonanza](https://snap.stanford.edu/data/soc-sign-bitcoin-otc.html)   |                 7,919 |                 1,973 |                36,543 |                  35,805 |                     738 |        98.0 |
+| [ML-1m](https://snap.stanford.edu/data/wiki-RfA.html)                |                 6,040 |                 3,706 |             1,000,209 |                 836,478 |                 163,731 |        83.6 |
+| [Amazon-DM](http://konect.cc/networks/slashdot-zoo)                  |                11,796 |                16,565 |               169,781 |                 165,777 |                   4,004 |        97.6 |
+* $\|\mathcal{U}\|$: the number of Users  
+* $\|\mathcal{V}\|$: the number of Items  
+* $\|\mathcal{E}\|$: the number of edges  
+* $\|\mathcal{E}^{+}\|$ and $\|\mathcal{E}^{-}\|$: the numbers of positive and negative edges, respectively  
+* $p$(+): the ratio of positive edges  
 
 ## Demo
 You can run the simple demo by typing the following command in your terminal:
