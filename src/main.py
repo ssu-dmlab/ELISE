@@ -25,6 +25,23 @@ def main(param):
     # Step 2. Model Train
     result_list = Trainer(pre_processed_data, **param).train()
     
+    # Step 3. Report the result
+    best_valid_epoch_auc = -1
+    best_valid_epoch_f1 = -1
+    best_valid_score_auc = -float('inf')
+    best_valid_score_f1 = -float('inf')
+    
+    for epoch, i in enumerate(result_list):
+        if i["valid"]["auc"] > best_valid_score_auc:
+            best_valid_score_auc = i["valid"]["auc"]
+            best_valid_epoch_auc = epoch
+        if i["valid"]["f1-ma"] > best_valid_score_f1:
+            best_valid_score_f1 = i["valid"]["f1-ma"]
+            best_valid_epoch_f1 = epoch
+    
+    print(f"Best valid score auc: {best_valid_score_auc}, Best test score auc: {result_list[best_valid_epoch_auc]['test']['auc']}")
+    print(f"Best valid score f1: {best_valid_score_f1}, Best test score f1: {result_list[best_valid_epoch_f1]['test']['f1-ma']}")
+    
 def main_wraper(model="elise", conf_file=None, **kwargs):
     conf_file = kwargs.get('conf_file', None)
     if conf_file is not None:
