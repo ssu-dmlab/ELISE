@@ -106,6 +106,7 @@ class Trainer(object):
             metrics: calculated each metrics after through decoder
         """
         # codes for experiments
+        # run with torch.no_grad() and model.eval()
         with torch.no_grad():
             train_prob = self.decoder.sign_predict(
                 embeddings, dataset["train_edges"], True)

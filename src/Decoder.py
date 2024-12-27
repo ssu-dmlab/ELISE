@@ -8,11 +8,9 @@ class Decoder(object):
         
         self.param = param
         
-        if param["num_decoder_layers"] != 0:
-            self.LinkSignClassifier = LinkSignClassifier(
-                self.param["decoder_input_dim"], 1, self.param["num_decoder_layers"]).to(param["device"])
-        else:
-            self.LinkSignClassifier = DotProductDecoder().to(param["device"])
+        
+        self.LinkSignClassifier = LinkSignClassifier(
+            self.param["decoder_input_dim"], 1, self.param["num_decoder_layers"]).to(param["device"])
         self.bceloss = torch.nn.BCELoss()
 
     def sign_predict(self, embeddings, edges, eval=False):
@@ -67,11 +65,11 @@ class Decoder(object):
         train_label[train_label == -1] = 0
         
         # sign loss
-        sign_prob = self.sign_predict(embeddings, train_edges)
+        sign_prob = self.sign_predict(embeddings, train_edges, False) #set eval to False
         assert train_label.shape[0] == sign_prob.shape[0]
         loss = self.bceloss(sign_prob, train_label)
-        
         sign_loss = loss.item()
+        
         return loss, sign_loss
 
     def get_link_sign_classifier(self):
@@ -82,21 +80,6 @@ class Decoder(object):
             embeddings (torch.Tensor): embeddings
         """
         return self.LinkSignClassifier
-
-class DotProductDecoder(nn.Module):
-    """
-    Decoder for link sign prediction.
-    """
-    def __init__(self):
-        super(DotProductDecoder, self).__init__()
-        self.sigmoid = nn.Sigmoid()
-        
-    def forward(self, edge_embeddings):
-        embedding_a_edges = edge_embeddings[:, :edge_embeddings.size(1) // 2]
-        embedding_b_edges = edge_embeddings[:, edge_embeddings.size(1) // 2:]
-        elementwise_mul = embedding_a_edges * embedding_b_edges  # (N, D)
-        y = elementwise_mul.sum(dim=1)  # (N,)
-        return self.sigmoid(y)
     
 class LinkSignClassifier(nn.Module):
     """
@@ -114,6 +97,9 @@ class LinkSignClassifier(nn.Module):
         self.out_dim = out_dim
         self.num_layers = num_layers
 
+        if self.num_layers < 1:
+            raise ValueError("Error: num_layers should be at least 1!")
+        
         if self.out_dim != 1:
             raise ValueError("Error: out_dim should be 1!")
 
