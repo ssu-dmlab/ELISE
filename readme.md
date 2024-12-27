@@ -74,8 +74,6 @@ bash python -m main
 | decoder_input_dim   | decoder input feature dimension                  | 256            |
 | split_ratio         | ratio of split of dataset for each phase         | [0.85,0.05,01] |
 | dataset_shuffle     | check the shuffle                                | true           |
-| direction           | an direction of edge                             | true           |
-| node_idx_type       | type of node(bi or uni)                          | bi             |
 | optimizer           | optimizer name                                   | Adam           |
 
 ## Result of Pre-trained ELISE
