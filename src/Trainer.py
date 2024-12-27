@@ -67,7 +67,7 @@ class Trainer(object):
             embeddings (torch.Tensor): embeddings
         """
         loss, sign_loss = self.decoder.calculate_loss(
-            embeddings, preprocessed_data, self.encoder.get_encoder_method())
+            embeddings, preprocessed_data)
         return loss, sign_loss
 
     def train(self):

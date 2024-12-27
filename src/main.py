@@ -51,24 +51,37 @@ def main(param):
     print(f"Best valid score auc: {best_valid_score_auc}, Best test score auc: {result_list[best_valid_epoch_auc]['test']['auc']}")
     print(f"Best valid score f1: {best_valid_score_f1}, Best test score f1: {result_list[best_valid_epoch_f1]['test']['f1-ma']}")
     
-def main_wraper(dataset="review", **kwargs):
+def main_wraper(dataset="review", config=None, **kwargs):
     """
     This method configures simulation from given option.
     
     Args:
-        dataset (str, optional): _description_. dataset name.
+        dataset (str, optional): dataset name.
+        config (str, optional): 
+            if config is directory path 
+                load the config file. 
+            else 
+                use the default config file. 
+                overwrite the config file with kwargs if config is None.
 
     Raises:
         ValueError: if not supported option
     """
-    base_config_path = f"../config/base_config/{dataset.lower()}.json"
-    config = load_model_config(base_config_path)
-    for k in kwargs:
-        if k in config:
-            logger.warning('{} will be overwritten!'.format(k))
-            config[k] = kwargs[k]
-        else:
-            raise ValueError
+    
+    if config is not None:
+        if kwargs:
+            raise ValueError('config and kwargs cannot be used together!')
+        config = load_model_config(config)
+    
+    else:
+        base_config_path = f"../config/base_config/{dataset.lower()}.json"
+        config = load_model_config(base_config_path)
+        for k in kwargs:
+            if k in config:
+                logger.warning('{} will be overwritten!'.format(k))
+                config[k] = kwargs[k]
+            else:
+                raise ValueError
     main(config)
 
 if __name__ == "__main__":

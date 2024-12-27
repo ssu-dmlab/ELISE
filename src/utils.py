@@ -59,7 +59,7 @@ def load_model_config(file_path):
 
 
 def save_model_config(param):
-    json_path = f"../config/{param['model']}/{param['epochs']}-{param['seed']}-{param['num_layer']}-{param['dataset_name']}-{param['seed']}.json"
+    json_path = f"../config/{param['dataset_name']}/{param['model']}/{param['epochs']}-{param['seed']}-{param['num_layer']}-{param['seed']}.json"
 
     if not os.path.exists(os.path.dirname(json_path)):
         os.makedirs(os.path.dirname(json_path))
