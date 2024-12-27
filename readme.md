@@ -55,6 +55,13 @@ cd src
 bash python -m main --dataset review
 ```
 
+## Training
+You can perform the training process of ELISE with the following command:
+```bash
+cd src
+bash python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {seed} ...
+```
+
 ## Options
 
 | Option              | Description                                      | Default        |
