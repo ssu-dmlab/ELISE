@@ -7,7 +7,6 @@ from fire import Fire
 from data_loader.DataLoader import DataLoader
 from utils import log_param, set_random_seed, load_model_config, save_model_config
 from Trainer import Trainer
-import pandas as pd
 
 def main(param):
     """

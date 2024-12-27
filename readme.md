@@ -52,7 +52,7 @@ The details of the datasets are provided in the following table:
 You can run the simple demo by typing the following command in your terminal:
 ```bash
 cd src
-bash python -m main --dataset review
+python3 main.py --dataset_name review
 ```
 
 ## Training
@@ -64,35 +64,35 @@ bash python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {se
 
 ## Options
 
-| Option              | Description                                      | Default        |
-| ------------------- | ------------------------------------------------ | -------------- |
-| model               | model name                                       | elise          |
-| dataset_name        | dataset name (review, bonanza, ml-1m, amazon-dm) | review         |
-| seed                | random seed value                                | 600            |
-| device              | device name                                      | cuda:0         |
-| epochs              | number of epoch                                  | 200            |
-| lr                  | learning rate of an optimizer                    | 0.005          |
-| wdc                 | L2 regularization $\lambda_{\text{reg}}$         | 0.0001         |
-| num_layer           | number $L$ of layer                              | 2              |
-| num_decoder_layer s | number of classifier layer                       | 2              |
-| c                   | ratio $c$ of personalized injection              | 0.45           |
-| rank_ratio          | ratio $r$ of rank                                | 0.7            |
-| input_dim           | model input feature dimension                    | 32             |
-| decoder_input_dim   | decoder input feature dimension                  | 256            |
-| split_ratio         | ratio of split of dataset for each phase         | [0.85,0.05,01] |
-| dataset_shuffle     | check the shuffle                                | true           |
-| optimizer           | optimizer name                                   | Adam           |
+| Option              | Description                              | Default        |
+| ------------------- | ---------------------------------------- | -------------- |
+| model               | model name                               | elise          |
+| dataset_name        | dataset name                             | review         |
+| seed                | random seed value                        | 600            |
+| device              | device name                              | cuda:0         |
+| epochs              | number of epoch                          | 200            |
+| lr                  | learning rate of an optimizer            | 0.0005         |
+| wdc                 | L2 regularization $\lambda_{\text{reg}}$ | 0.00001        |
+| num_layer           | number $L$ of layer                      | 5              |
+| num_decoder_layer s | number of classifier layer               | 2              |
+| c                   | ratio $c$ of personalized injection      | 0.01           |
+| rank_ratio          | ratio $r$ of rank                        | 0.4            |
+| input_dim           | model input feature dimension            | 32             |
+| decoder_input_dim   | decoder input feature dimension          | 256            |
+| split_ratio         | ratio of split of dataset for each phase | [0.85,0.05,01] |
+| dataset_shuffle     | check the shuffle                        | true           |
+| optimizer           | optimizer name                           | Adam           |
 
 ## Result of ELISE 
 
-|**Dataset**|**AUC**|**Macro-F1**|**Micro-F1**|**Binary-F1**|
+|**Dataset**|**AUC**|**Binary-F1**|**Macro-F1**|**Micro-F1**|
 |:-:|:-:|:-:|:-:|:-:|
-|**Review**|      |      |      |      |
-|**Bonanza**|      |      |      |      |
-|**ml-1m**|      |      |      |      |
-|**Amazon-dm**|      |      |      |      |
+|**Review**| 0.764 | 0.564 | 0.674 | 0.712 |
+|**Bonanza**| 0.698 | 0.991 | 0.557 | 0.982 |
+|**ML-1M**| 0.829 | 0.920 | 0.685 | 0.860 |
+|**Amazon-DM**| 0.903 | 0.990 | 0.695 | 0.980 |
 
-All experiments are conducted on RTX A5000 (24GB) with cuda version 12.0, and the above results were produced with the random seed `seed=1`.
+All experiments are conducted on RTX A5000 (24GB) with cuda version 12.0, and the above results were produced with the random seed `seed=600`.
 
 
 
