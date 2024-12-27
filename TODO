@@ -1,7 +1,5 @@
 Code
-[ ] 코드 내부 주석 및 클래스 개요, input 달기
-    - on going
-    - 현재 model, data loader 일부 수정 완료
+[O] 코드 내부 주석 및 클래스 개요, input 달기
 [O] MLflow 관련 코드 삭제하기
 [O] 모델 트레이닝 완료 후 결과 리포트
 REPO
@@ -9,6 +7,6 @@ REPO
 [O] 깃허브에 push 하기.
 README
 [O] over-view 작성
-[ ] Dataset 링크 변경
+[O] Dataset 링크 변경
 [ ] Demo 밑으로 전부 재작성
     - on going
