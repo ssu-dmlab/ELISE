@@ -17,7 +17,7 @@ class Elise(nn.Module):
 
         Args:
             num_layer (int): # of layer
-            c (float): ratio of personalied injection
+            c (float): ratio of personalized injection
             device (str): GPU or CPU device
             input_dim (int): dimension size
         """
@@ -123,25 +123,25 @@ class Elise(nn.Module):
             # ------------Refined Messaged Passing------------
             # U to V
             lram_plv = self.compute_rmp(direction_to='v',
-                                                   P=self.hat_P_l_u[l-1],
-                                                   M=self.hat_M_l_u[l-1])
+                                        P=self.hat_P_l_u[l-1],
+                                        M=self.hat_M_l_u[l-1])
             self.hat_P_l_v[l] = ((1-self.c) * lram_plv) + \
                 (self.c * self.hat_P_l_v[0])
 
             lram_mlv = self.compute_rmp(direction_to='v',
-                                                   P=self.hat_M_l_u[l-1],
-                                                   M=self.hat_P_l_u[l-1])
+                                        P=self.hat_M_l_u[l-1],
+                                        M=self.hat_P_l_u[l-1])
             self.hat_M_l_v[l] = (1-self.c) * lram_mlv
             # V to U
             lram_plu = self.compute_rmp(direction_to='u',
-                                                   P=self.hat_P_l_v[l-1],
-                                                   M=self.hat_M_l_v[l-1])
+                                        P=self.hat_P_l_v[l-1],
+                                        M=self.hat_M_l_v[l-1])
             self.hat_P_l_u[l] = ((1-self.c) * lram_plu) + \
                 (self.c * self.hat_P_l_u[0])
 
             lram_mlu = self.compute_rmp(direction_to='u',
-                                                   P=self.hat_M_l_v[l-1],
-                                                   M=self.hat_P_l_v[l-1])
+                                        P=self.hat_M_l_v[l-1],
+                                        M=self.hat_P_l_v[l-1])
             self.hat_M_l_u[l] = (1-self.c) * lram_mlu
         
         # ------------Layer-wise aggregation------------
@@ -195,18 +195,19 @@ class Elise(nn.Module):
         return usve_p + usve_m
 
     def concatnate_emb(self):
-        pm_v_cat = torch.cat([self.agg_P_v, self.agg_M_v], dim=-1)
-        hat_pm_v_cat = torch.cat(
-            [self.agg_hat_P_v, self.agg_hat_M_v], dim=-1)
+        """_summary_
 
-        item_emb = torch.cat([pm_v_cat, hat_pm_v_cat], dim=-1)  # N X N
+        Returns:
+            [u_emb, v_emb]: the listed embeddings of each node type
+        """
+        pm_v_cat = torch.cat([self.agg_P_v, self.agg_M_v], dim=-1)
+        hat_pm_v_cat = torch.cat([self.agg_hat_P_v, self.agg_hat_M_v], dim=-1)
+        v_emb = torch.cat([pm_v_cat, hat_pm_v_cat], dim=-1)  # N X N
         
         pm_u_cat = torch.cat([self.agg_P_u, self.agg_M_u], dim=-1)
-        hat_pm_u_cat = torch.cat(
-            [self.agg_hat_P_u, self.agg_hat_M_u], dim=-1)
+        hat_pm_u_cat = torch.cat([self.agg_hat_P_u, self.agg_hat_M_u], dim=-1)
+        u_emb = torch.cat([pm_u_cat, hat_pm_u_cat], dim=-1)  # M X M
 
-        user_emb = torch.cat([pm_u_cat, hat_pm_u_cat], dim=-1)  # M X M
-
-        return  [user_emb, item_emb]
+        return  [u_emb, v_emb]
     
 

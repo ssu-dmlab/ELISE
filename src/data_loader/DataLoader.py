@@ -49,8 +49,8 @@ class DataLoader(object):
 
     def processing(
         self,
-        **kwargs
-    ):
+        **kwargs):
+        
         array_of_edges, self.num_nodes, self.num_edges = load_data(
             self.dataset_path, self.direction, self.node_idx_type)
         
@@ -100,7 +100,8 @@ class DataLoader(object):
         rank_ratio: float,
         **kwargs
     ) -> np.array:
-        """ licos augmentation graph processor
+        """ 
+        processed SVD with processed data(low-wise semi-normalized matrices)
 
         Args:
             train_edge (np.array): _description_

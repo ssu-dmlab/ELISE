@@ -9,6 +9,15 @@ from utils import log_param, set_random_seed, load_model_config, save_model_conf
 from Trainer import Trainer
 
 def main(param):
+    """
+    This method operates the overall procedures.
+
+    Args:
+        param (dict): the dictionary of mapped options
+
+    Raises:
+        Exception: if do not support dataset
+    """
     # Step 0. Initialization 
     device = param["device"] if torch.cuda.is_available() else 'cpu'
     set_random_seed(seed=param["seed"], device=device)
@@ -43,6 +52,16 @@ def main(param):
     print(f"Best valid score f1: {best_valid_score_f1}, Best test score f1: {result_list[best_valid_epoch_f1]['test']['f1-ma']}")
     
 def main_wraper(model="elise", conf_file=None, **kwargs):
+    """
+    This method configures simulation from given option.
+    
+    Args:
+        model (str, optional): _description_. Defaults to "elise".
+        conf_file (_type_, optional): _description_. Defaults to None.
+
+    Raises:
+        ValueError: if not supported option
+    """
     conf_file = kwargs.get('conf_file', None)
     if conf_file is not None:
         config = load_model_config(conf_file)

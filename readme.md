@@ -1,6 +1,6 @@
 # ELISE
 This is the official implementation of **ELISE** (Effective and Lightweight Representation Learning for Signed Bipartite Graphs). 
-The paper is submitted to Neural Networks(Elsevier), and under review:
+The paper is submitted to Neural Networks(Elsevier), and is under review:
 
 * Effective and Lightweight Representation Learning for Signed Bipartite Graphs <br/>
   Gyeongmin Gu, Minseo Jeon, Hyun-Je Song, Jinhong Jung<br/>(under review)
@@ -31,10 +31,10 @@ conda activate ELISE
 
 ## Datasets 
 We provide datasets used in the paper for reproducibility. 
-You can find raw datasets at `./datasets` folder where the file's name is `${DATASET}.tsv`. 
+You can find raw datasets in `./datasets` folder where the file's name is `${DATASET}.tsv`. 
 The `${DATASET}` is one of `review`, `bonanza`,  `ml-1m`, and `amazon-dm`.
 This file contains the list of signed edges where each line consists of a tuple of `(src, dst, sign)`.
-The details of datasets are provided in the following table:
+The details of the datasets are provided in the following table:
 
 | **Dataset**                                    | **$\|\mathcal{U}\|$** | **$\|\mathcal{V}\|$** | **$\|\mathcal{E}\|$** | **$\|\mathcal{E}^{+}\|$** | **$\|\mathcal{E}^{-}\|$** | **$p$(+)%** |
 |:----------------------------------------------:|----------------------:|----------------------:|----------------------:|-------------------------:|-------------------------:|------------:|
@@ -55,19 +55,36 @@ cd src
 bash python -m main
 ```
 
-### ----------------아래라인 전부 재작성 요망------------------.
 ## Options
 
-| Option | Description | Default |
-| ------ | ----------- | ------- |
-|        |             |         |
-|        |             |         |
-|        |             |         |
-|        |             |         |
+| Option              | Description                                      | Default        |
+| ------------------- | ------------------------------------------------ | -------------- |
+| model               | model name                                       | elise          |
+| dataset_name        | dataset name (review, bonanza, ml-1m, amazon-dm) | review         |
+| seed                | random seed value                                | 600            |
+| device              | device name                                      | cuda:0         |
+| epochs              | number of epoch                                  | 200            |
+| lr                  | learning rate of an optimizer                    | 0.005          |
+| wdc                 | L2 regularization $\lambda_{\text{reg}}$         | 0.0001         |
+| num_layer           | number $L$ of layer                              | 2              |
+| num_decoder_layer s | number of classifier layer                       | 2              |
+| c                   | ratio $c$ of personalized injection              | 0.45           |
+| rank_ratio          | ratio $r$ of rank                                | 0.7            |
+| input_dim           | model input feature dimension                    | 32             |
+| decoder_input_dim   | decoder input feature dimension                  | 256            |
+| split_ratio         | ratio of split of dataset for each phase         | [0.85,0.05,01] |
+| dataset_shuffle     | check the shuffle                                | true           |
+| direction           | an direction of edge                             | true           |
+| node_idx_type       | type of node(bi or uni)                          | bi             |
+| optimizer           | optimizer name                                   | Adam           |
 
+## Result of Pre-trained ELISE
 
-
-## Results
+|      |      |      |      |      |
+| ---- | ---- | ---- | ---- | ---- |
+|      |      |      |      |      |
+|      |      |      |      |      |
+|      |      |      |      |      |
 
 
 

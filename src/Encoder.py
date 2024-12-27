@@ -2,7 +2,9 @@ import torch
 from ELISE import Elise
 
 class Encoder(object):
-    """encoder class for training model
+    """
+    encoder class for training model
+    
     Args:
         **param: additional parameters
     """
@@ -29,6 +31,9 @@ class Encoder(object):
 
         Args:
             dataset (dict): mapped data for each phase
+            
+        Returns:
+            encoder_method (object): builded encoder model
         """
         encoder_method = Elise(**self.param)
         encoder_method.build_structure(dataset)

@@ -17,7 +17,8 @@ class Decoder(object):
 
     def sign_predict(self, embeddings, edges, eval=False):
         """_summary_
-
+        This method operates to make a logit from encoder results.
+        
         Args:
             embeddings (object): the embeddings from encoder
             edges (torch.tensor): the edge list

@@ -96,6 +96,15 @@ class Trainer(object):
         return result_list
 
     def evaluate(self, embeddings, dataset):
+        """_summary_
+
+        Args:
+            embeddings (torch.tensor): the embedding from encoder
+            dataset (dict): mapped dataset
+
+        Returns:
+            metrics: calculated each metrics after through decoder
+        """
         # codes for experiments
         with torch.no_grad():
             train_prob = self.decoder.sign_predict(
