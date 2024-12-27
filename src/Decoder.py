@@ -11,6 +11,8 @@ class Decoder(object):
         if param["num_decoder_layers"] != 0:
             self.LinkSignClassifier = LinkSignClassifier(
                 self.param["decoder_input_dim"], 1, self.param["num_decoder_layers"]).to(param["device"])
+        else:
+            self.LinkSignClassifier = DotProductDecoder().to(param["device"])
         self.bceloss = torch.nn.BCELoss()
 
     def sign_predict(self, embeddings, edges, eval=False):
@@ -118,3 +120,19 @@ class LinkSignClassifier(nn.Module):
         edge_embeddings: torch.Tensor
     ) -> torch.Tensor:
         return self.classifier(edge_embeddings)
+
+    
+class DotProductDecoder(nn.Module):
+    """
+    Decoder for link sign prediction.
+    """
+    def __init__(self):
+        super(DotProductDecoder, self).__init__()
+        self.sigmoid = nn.Sigmoid()
+        
+    def forward(self, edge_embeddings):
+        embedding_a_edges = edge_embeddings[:, :edge_embeddings.size(1) // 2]
+        embedding_b_edges = edge_embeddings[:, edge_embeddings.size(1) // 2:]
+        elementwise_mul = embedding_a_edges * embedding_b_edges  # (N, D)
+        y = elementwise_mul.sum(dim=1)  # (N,)
+        return self.sigmoid(y)
