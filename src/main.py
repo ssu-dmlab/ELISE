@@ -7,6 +7,7 @@ from fire import Fire
 from data_loader.DataLoader import DataLoader
 from utils import log_param, set_random_seed, load_model_config, save_model_config
 from Trainer import Trainer
+import pandas as pd
 
 def main(param):
     """
@@ -48,8 +49,8 @@ def main(param):
             best_valid_score_f1 = i["valid"]["f1-ma"]
             best_valid_epoch_f1 = epoch
     
-    print(f"Best valid score auc: {best_valid_score_auc}, Best test score auc: {result_list[best_valid_epoch_auc]['test']['auc']}")
-    print(f"Best valid score f1: {best_valid_score_f1}, Best test score f1: {result_list[best_valid_epoch_f1]['test']['f1-ma']}")
+    print(f"Best valid score auc: {round(best_valid_score_auc,3)}, Best test score auc: {round(result_list[best_valid_epoch_auc]['test']['auc'],3)}")
+    print(f"Best valid score macro f1: {round(best_valid_score_f1,3)}, Best test score macro f1: {round(result_list[best_valid_epoch_f1]['test']['f1-ma'],3)}")
     
 def main_wraper(dataset="review", config=None, **kwargs):
     """
