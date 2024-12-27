@@ -39,6 +39,7 @@ class Elise(nn.Module):
         # randomly initialized representation
         self.P_0_v = nn.Parameter(init_emb[1])
         self.P_0_u = nn.Parameter(init_emb[0])
+
         self.M_0_v = nn.Parameter(torch.zeros(
             init_emb[1].shape).to(self.device))
         self.M_0_u = nn.Parameter(torch.zeros(

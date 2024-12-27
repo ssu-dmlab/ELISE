@@ -1,0 +1,60 @@
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.7770432692307693, Best test score auc: 0.6339673006339673
+Best valid score f1: 0.7375565610859729, Best test score f1: 0.595858223815213
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.8209134615384615, Best test score auc: 0.7102678571428571
+Best valid score f1: 0.8089248277927523, Best test score f1: 0.6916759985069055
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.6948529411764706, Best test score auc: 0.7611764705882353
+Best valid score f1: 0.639751552795031, Best test score f1: 0.7327898550724637
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.7759856630824373, Best test score auc: 0.6979844961240309
+Best valid score f1: 0.7406855439642325, Best test score f1: 0.6557125307125307
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.6028537455410226, Best test score auc: 0.6902173913043479
+Best valid score f1: 0.6378233719892952, Best test score f1: 0.6341085271317829
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.7632211538461539, Best test score auc: 0.6389723056389722
+Best valid score f1: 0.7375565610859729, Best test score f1: 0.6132448104882764
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.8257211538461539, Best test score auc: 0.7123511904761906
+Best valid score f1: 0.7725490196078432, Best test score f1: 0.6971618357487923
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.6727941176470589, Best test score auc: 0.748235294117647
+Best valid score f1: 0.6416260162601626, Best test score f1: 0.6933616820222065
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.7801672640382317, Best test score auc: 0.6917829457364341
+Best valid score f1: 0.7228195937873357, Best test score f1: 0.6184675539514248
+Parameter Name: P_0_v, Shape: torch.Size([304, 32])
+Parameter Name: P_0_u, Shape: torch.Size([182, 32])
+Parameter Name: M_0_v, Shape: torch.Size([304, 32])
+Parameter Name: M_0_u, Shape: torch.Size([182, 32])
+Best valid score auc: 0.6076099881093936, Best test score auc: 0.6853864734299517
+Best valid score f1: 0.6289978678038379, Best test score f1: 0.6259592926259593
