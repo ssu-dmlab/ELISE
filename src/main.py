@@ -51,37 +51,25 @@ def main(param):
     print(f"Best valid score auc: {best_valid_score_auc}, Best test score auc: {result_list[best_valid_epoch_auc]['test']['auc']}")
     print(f"Best valid score f1: {best_valid_score_f1}, Best test score f1: {result_list[best_valid_epoch_f1]['test']['f1-ma']}")
     
-def main_wraper(model="elise", conf_file=None, **kwargs):
+def main_wraper(dataset="review", **kwargs):
     """
     This method configures simulation from given option.
     
     Args:
-        model (str, optional): _description_. Defaults to "elise".
-        conf_file (_type_, optional): _description_. Defaults to None.
+        dataset (str, optional): _description_. dataset name.
 
     Raises:
         ValueError: if not supported option
     """
-    conf_file = kwargs.get('conf_file', None)
-    if conf_file is not None:
-        config = load_model_config(conf_file)
-        for k in kwargs:
-            if k in config:
-                logger.warning('{} will be overwritten!'.format(k))
-                config[k] = kwargs[k]
-            else:
-                raise ValueError
-        main(config)
-    else:
-        base_config_path = f"../config/base_config/{model.lower()}.json"
-        config = load_model_config(base_config_path)
-        for k in kwargs:
-            if k in config:
-                logger.warning('{} will be overwritten!'.format(k))
-                config[k] = kwargs[k]
-            else:
-                raise ValueError
-        main(config)
+    base_config_path = f"../config/base_config/{dataset.lower()}.json"
+    config = load_model_config(base_config_path)
+    for k in kwargs:
+        if k in config:
+            logger.warning('{} will be overwritten!'.format(k))
+            config[k] = kwargs[k]
+        else:
+            raise ValueError
+    main(config)
 
 if __name__ == "__main__":
     Fire(main_wraper)
