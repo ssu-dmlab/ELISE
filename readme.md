@@ -94,9 +94,5 @@ bash python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {se
 
 All experiments are conducted on RTX A5000 (24GB) with cuda version 12.0, and the above results were produced with the random seed `seed=1`.
 
-## Citation
 
-```javascript
-
-```
 
