@@ -70,7 +70,7 @@ class Trainer(object):
             embeddings, preprocessed_data)
         return loss, sign_loss
 
-    def train(self):
+    def train_model(self):
         """
         train function for training model
         """
@@ -79,7 +79,6 @@ class Trainer(object):
         for epoch in tqdm(range(self.param["epochs"])):
             self.optim.zero_grad()
             embeddings = self.encoding()
-            
             loss, sign_loss = self.decoding(embeddings, self.pre_processed_data)
             loss.backward()
             

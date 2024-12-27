@@ -37,6 +37,8 @@ class Encoder(object):
         """
         encoder_method = Elise(**self.param)
         encoder_method.build_structure(dataset)
+        for name, param in encoder_method.named_parameters():
+            print(f"Parameter Name: {name}, Shape: {param.shape}")
         return encoder_method.to(self.param["device"])
 
     def get_encoder_method(self):

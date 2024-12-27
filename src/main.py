@@ -32,7 +32,7 @@ def main(param):
     pre_processed_data, param["num_nodes"] = data_loader.get_data(device)
         
     # Step 2. Model Train
-    result_list = Trainer(pre_processed_data, **param).train()
+    result_list = Trainer(pre_processed_data, **param).train_model()
     
     # Step 3. Report the result
     best_valid_epoch_auc = -1
