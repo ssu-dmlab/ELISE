@@ -1,6 +1,7 @@
 # ELISE
 This is the official implementation of **ELISE** (Effective and Lightweight Representation Learning for Signed Bipartite Graphs). 
 The paper is submitted to Neural Networks(Elsevier), and is under review:
+![image](https://github.com/user-attachments/assets/34440249-0d28-4daf-9d57-cea8f3c47e83)
 
 * Effective and Lightweight Representation Learning for Signed Bipartite Graphs <br/>
   Gyeongmin Gu, Minseo Jeon, Hyun-Je Song, Jinhong Jung<br/>(under review)
@@ -59,7 +60,7 @@ python3 main.py --dataset_name review
 You can perform the training process of ELISE with the following command:
 ```bash
 cd src
-bash python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {seed} ...
+python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {seed} ...
 ```
 
 ## Options
