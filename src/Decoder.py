@@ -5,6 +5,7 @@ import torch
 
 class Decoder(object):
     def __init__(self, **param):
+        
         self.param = param
         
         if param["num_decoder_layers"] != 0:
@@ -15,6 +16,20 @@ class Decoder(object):
         self.bceloss = torch.nn.BCELoss()
 
     def sign_predict(self, embeddings, edges, eval=False):
+        """_summary_
+
+        Args:
+            embeddings (object): the embeddings from encoder
+            edges (torch.tensor): the edge list
+            eval (bool): if training phase then set to false, otherwise, set to true. Defaults to False.
+
+        Raises:
+            ValueError: it occur by param["node_idx_type"]
+
+        Returns:
+            logit (torch.tensor): the logit value after through classifier
+        """
+        
         #train or eval
         if eval:
             self.LinkSignClassifier.eval()
@@ -38,13 +53,13 @@ class Decoder(object):
         logit = self.LinkSignClassifier(features).squeeze()
         return logit
 
-    def calculate_loss(self, embeddings, preprocessed_data, encoder_method):
+    def calculate_loss(self, embeddings, preprocessed_data):
         """
         This method is decoder for train the model
 
         Args:
             embeddings (torch.Tensor): embeddings
-            edges (torch.Tensor): edges
+            preprocessed_data (dict): edges
             y (torch.Tensor): labels
         """
         train_edges, train_label = preprocessed_data["train_edges"], preprocessed_data["train_label"].float()
@@ -84,7 +99,7 @@ class DotProductDecoder(nn.Module):
     
 class LinkSignClassifier(nn.Module):
     """
-    This method is consist of classifier by designated gparameters
+    This method is consist of classifier by designated parameters
 
     Args:
         in_dim(int): input dimension

@@ -6,34 +6,27 @@ import torch.nn.functional as F
 from torch import Tensor
 import numpy as np
 
-class elise(nn.Module):
+class Elise(nn.Module):
     def __init__(self,
                  num_layer: int,
                  c: float,
                  device: str,
                  input_dim: int,
-                 output_dim=32,
-                 decoder_dim=32,
-                 dropout=0.5,
                  **params):
         """_summary_
 
         Args:
-            emb_size (int): embedding size
-            layer_num (int): # of layer
-            beta (float): the hyper-parameter of control to loss\
-                between the sign loss and Cl loss
-            temp (float): temperature for compute contrastive loss 
+            num_layer (int): # of layer
+            c (float): ratio of personalied injection
+            device (str): GPU or CPU device
+            input_dim (int): dimension size
         """
-        super(elise, self).__init__()
+        super(Elise, self).__init__()
 
         # hyper-parameters
+        self.layer_num = num_layer
         self.c = c
         self.input_dim = input_dim
-        self.output_dim = output_dim
-        self.decoder_dim = decoder_dim
-
-        self.layer_num = num_layer
 
         # the alpha for final layer
         self.alpha = 1/(self.layer_num+1)
@@ -91,7 +84,7 @@ class elise(nn.Module):
         self.B_pos = dataset["B_pos"]
         self.B_neg = dataset["B_neg"]
 
-        # component of R-SVD
+        # components of R-SVD
         self.svd_A = dataset["svd_A"]
         self.svd_B = dataset["svd_B"]
         
@@ -102,23 +95,20 @@ class elise(nn.Module):
         Args:
             None
 
-        Returns:
+        Returns <- concatenate_emb:
             user_emb (torch.tensor) : user_emb
             item_emb (torch.tensor) : item_emb
         """
-        # ------------generate representations------------
-
-        # make representation on hidden
         for l in range(1, self.layer_num+1):
 
-            # ------------SPMP------------
-            # user(u) to item(v)
+            # ------------Singed Personalized Message Passing------------
+            # U to V
             plv = (1-self.c) * (torch.mm(self.B_pos, self.P_l_u[l-1]) + torch.mm(self.B_neg, self.M_l_u[l-1])) \
                 + (self.c * self.P_l_v[0])
             mlv = (1-self.c) * (torch.mm(self.B_pos,
                                          self.M_l_u[l-1]) + torch.mm(self.B_neg, self.P_l_u[l-1]))
 
-            # item to user
+            # V to U
             plu = (1-self.c) * (torch.mm(self.A_pos, self.P_l_v[l-1]) + torch.mm(self.A_neg, self.M_l_v[l-1])) \
                 + (self.c * self.P_l_u[0])
             mlu = (1-self.c) * torch.mm(self.A_pos,
@@ -130,50 +120,51 @@ class elise(nn.Module):
             self.P_l_u[l] = plu
             self.M_l_u[l] = mlu
 
-            # ------------SLOA------------
-
-            lram_plv = self.compute_augmented_view(direction_to='v',
+            # ------------Refined Messaged Passing------------
+            # U to V
+            lram_plv = self.compute_rmp(direction_to='v',
                                                    P=self.hat_P_l_u[l-1],
                                                    M=self.hat_M_l_u[l-1])
             self.hat_P_l_v[l] = ((1-self.c) * lram_plv) + \
                 (self.c * self.hat_P_l_v[0])
 
-            lram_mlv = self.compute_augmented_view(direction_to='v',
+            lram_mlv = self.compute_rmp(direction_to='v',
                                                    P=self.hat_M_l_u[l-1],
                                                    M=self.hat_P_l_u[l-1])
             self.hat_M_l_v[l] = (1-self.c) * lram_mlv
-            
-            lram_plu = self.compute_augmented_view(direction_to='u',
+            # V to U
+            lram_plu = self.compute_rmp(direction_to='u',
                                                    P=self.hat_P_l_v[l-1],
                                                    M=self.hat_M_l_v[l-1])
             self.hat_P_l_u[l] = ((1-self.c) * lram_plu) + \
                 (self.c * self.hat_P_l_u[0])
 
-            lram_mlu = self.compute_augmented_view(direction_to='u',
+            lram_mlu = self.compute_rmp(direction_to='u',
                                                    P=self.hat_M_l_v[l-1],
                                                    M=self.hat_P_l_v[l-1])
             self.hat_M_l_u[l] = (1-self.c) * lram_mlu
         
-        # ------------Aggregation------------
+        # ------------Layer-wise aggregation------------
+        # Signed Personalized Message Passing
         self.agg_P_v = self.alpha * sum(self.P_l_v)
         self.agg_M_v = self.alpha * sum(self.M_l_v)
 
         self.agg_P_u = self.alpha * sum(self.P_l_u)
         self.agg_M_u = self.alpha * sum(self.M_l_u)
 
+        # Refined Message Passing
         self.agg_hat_P_v = self.alpha * sum(self.hat_P_l_v)
         self.agg_hat_M_v = self.alpha * sum(self.hat_M_l_v)
 
         self.agg_hat_P_u = self.alpha * sum(self.hat_P_l_u)
         self.agg_hat_M_u = self.alpha * sum(self.hat_M_l_u)
         
-        
         return self.concatnate_emb()
 
-    def compute_augmented_view(self,
-                               direction_to: str,
-                               P: Tensor,
-                               M: Tensor):
+    def compute_rmp(self,
+                    direction_to: str,
+                    P: Tensor,
+                    M: Tensor):
         """_summary_
 
         Args:
@@ -216,7 +207,6 @@ class elise(nn.Module):
 
         user_emb = torch.cat([pm_u_cat, hat_pm_u_cat], dim=-1)  # M X M
 
-        
         return  [user_emb, item_emb]
     
 

@@ -1,16 +1,18 @@
 # ELISE
 This is the official implementation of **ELISE** (Effective and Lightweight Representation Learning for Signed Bipartite Graphs). 
-The paper is submitted to Neural Networks, and under review:
+The paper is submitted to Neural Networks(Elsevier), and under review:
 
 * Effective and Lightweight Representation Learning for Signed Bipartite Graphs <br/>
-  Gyeongmin Gu, Minseo Jeon, Hyun-Je Song, Jinhong Jung<br/>
-  Neural Networks (submitted)
+  Gyeongmin Gu, Minseo Jeon, Hyun-Je Song, Jinhong Jung<br/>(under review)
 
 
 ## Overview
--------------------------작성요망-------------------------- 
+How can we effectively and efficiently learn node representations in signed bipartite graphs? A signed bipartite graph is a graph consisting of two nodes sets where nodes of different types are positively or negative connected, and it has been extensively used to model various real-world relationships such as e-commerce, peer review systems, etc. To analyze such a graph, previous studies have focused on designing methods for learning node representations using graph neural networks (GNNs). In particular, these methods insert edges between nodes of the same type based on balance theory, enabling them to leverage augmented structures in their learning. However, the existing methods rely on a naive message passing design, which is prone to over-smoothing and susceptible to noisy interactions in real-world graphs. Furthermore, they suffer from computational inefficiency due to their heavy design and the significant increase in the number of added edges.
+
+In this paper, we propose ELISE, an effective and lightweight GNN-based approach for learning signed bipartite graphs. We first extend personalized propagation to a signed bipartite graph, incorporating signed edges during message passing. This extension adheres to balance theory without introducing additional edges, mitigating the over-smoothing issue and enhancing representation power. We then jointly learn node embeddings on a low-rank approximation of the signed bipartite graph, which reduces potential noise and emphasizes its global structure, further improving expressiveness without significant loss of efficiency. We encapsulate these ideas into ELISE, designing it to be lightweight, unlike the previous methods that add too many edges and cause inefficiency. Through extensive experiments on real-world signed bipartite graphs, we demonstrate that ELISE outperforms its competitors for predicting link signs while providing faster training and inference time.
 
 ## Prerequisites
+
 The packages used in this repository are as follows:
 ```
 python==3.12.3
@@ -30,17 +32,18 @@ conda activate ELISE
 ## Datasets 
 We provide datasets used in the paper for reproducibility. 
 You can find raw datasets at `./datasets` folder where the file's name is `${DATASET}.tsv`. 
-The `${DATASET}` is one of `amazon-dm`, `bonanza`, `ml-1m` and `review`.
+The `${DATASET}` is one of `review`, `bonanza`,  `ml-1m`, and `amazon-dm`.
 This file contains the list of signed edges where each line consists of a tuple of `(src, dst, sign)`.
 The details of datasets are provided in the following table:
+
 | **Dataset**                                    | **$\|\mathcal{U}\|$** | **$\|\mathcal{V}\|$** | **$\|\mathcal{E}\|$** | **$\|\mathcal{E}^{+}\|$** | **$\|\mathcal{E}^{-}\|$** | **$p$(+)%** |
 |:----------------------------------------------:|----------------------:|----------------------:|----------------------:|-------------------------:|-------------------------:|------------:|
 | [Review](https://snap.stanford.edu/data/soc-sign-bitcoin-alpha.html)  |                   182 |                   304 |                 1,170 |                     464 |                     706 |        40.3 |
 | [Bonanza](https://snap.stanford.edu/data/soc-sign-bitcoin-otc.html)   |                 7,919 |                 1,973 |                36,543 |                  35,805 |                     738 |        98.0 |
 | [ML-1m](https://snap.stanford.edu/data/wiki-RfA.html)                |                 6,040 |                 3,706 |             1,000,209 |                 836,478 |                 163,731 |        83.6 |
 | [Amazon-DM](http://konect.cc/networks/slashdot-zoo)                  |                11,796 |                16,565 |               169,781 |                 165,777 |                   4,004 |        97.6 |
-* $\|\mathcal{U}\|$: the number of Users  
-* $\|\mathcal{V}\|$: the number of Items  
+* $\|\mathcal{U}\|$: the number of type of node $\mathcal{U}$  
+* $\|\mathcal{V}\|$: the number of type of node $\mathcal{V}$  
 * $\|\mathcal{E}\|$: the number of edges  
 * $\|\mathcal{E}^{+}\|$ and $\|\mathcal{E}^{-}\|$: the numbers of positive and negative edges, respectively  
 * $p$(+): the ratio of positive edges  
@@ -53,84 +56,24 @@ bash python -m main
 ```
 
 ### ----------------아래라인 전부 재작성 요망------------------.
-This trains DINES on the `BC_ALPHA` dataset with the hyperparameters stored at `./pretrained/BC_ALPHA/config.json`. 
-After the training phase completes, the trained model is saved as `encoder.pt` and `decoder.pt` at the folder `./output/BC_ALPHA`. 
-Then, it evaluates the trained model on the link sign prediction task in terms of AUC and Macro-F1.
+## Options
 
-## Pre-trained DINES
-We provide pre-trained models of DINES for each data stored at `./pretrained/${DATASET}` folder where the file names are `encoder.pt` and `decoder.pt`.
-The hyperparameters used for training them are reported in the Appendix section of the paper, and they are saved in `./pretrained/${DATASET}/config.json`.
-
-## Results of Pre-trained DINES
-The results of the pre-trained models are as follows:
-|**Dataset**|**AUC**|**Macro-F1**|
-|:-:|:-:|:-:|
-|**BC_ALPHA**|0.937|0.789|
-|**BC_OTC**|0.950|0.860|
-|**WIKI_RFA**|0.914|0.786|
-|**SLASHDOT**|0.927|0.831|
-|**EPINIONS**|0.967|0.895|
-
-All experiments are conducted on RTX 3090 (24GB) with cuda version 12.0, and the above results were produced with the random seed `seed=1`.
-
-## How to Reproduce the Above Results with the Pre-traied Models
-You can reproduce the results the following command which evaluates a test dataset using a pre-trained model.
-
-```bash
-python ./src/run_evaluate.py --input-dir ./pretrained --dataset ${DATASET} --gpu-id ${GPU_ID}
-```
-
-The pre-trained models were generated by the following command:
-
-```bash
-python ./src/run_train.py --load-config --output_dir ./pretrained --dataset ${DATASET} --seed 1 
-```
-
-## Detailed Usage and Options
-You can train and evaluate with your own datasets or custom hyperparmeters using `run_train.py` and `run_evaluate.py`.
-
-### Training
-You can perform the training process of DINES with the following command:
-```bash
-python src/run_train.py [--<argument name> <argument value>] [...]
-```
-We describe the detailed options of `src/run_train.py` in the following table:
-
-|**Option**|**Description**|**Default**|
-|:-:|:-:|:-:|
-|`load-config`|whether to load the configuration used in a pre-trained model|False|
-|`dataset`|dataset name|BC_ALPHA|
-|`data-dir`|data directory path|./data|
-|`output-dir`|output directory path|./output|
-|`test-ratio`|ratio of test edges|0.2|
-|`gpu-id`|GPU id; If None, a CPU is used|None|
-|`seed`|random seed; If None, the seed is not fixed|None|
-|`in-dim`|input feature dimension|64|
-|`out-dim`|output embedding dimension|64|
-|`num-epochs`|number of epochs|100|
-|`lr`|learning rate $\eta$ of an optimizer|0.005|
-|`weight-decay`|strength $\lambda_{\texttt{reg}}$ of L2 regularization|0.005|
-|`num-factors`|number $K$ of factors |8|
-|`num-layers`|number $L$ of layers |2|
-|`lambda-disc`|strength $\lambda_{\texttt{disc}}$ of the discriminative loss|0.1|
-|`aggr-type`|aggregator type (sum, max, mean, attn) |sum|
-
-* Note that several PyTorch APIs such as `torch.index_add_` run non-deterministically on a GPU [[link]](https://pytorch.org/docs/stable/notes/randomness.html); thus, the results on the GPU could be slightly different every run although we fix the random seed (but, the difference is not statistically significant). 
-* For a strict reproducibility, we provide an additional option using a CPU, i.e., `--device=None` forces the code to run on the CPU, and makes the procedure deterministic by setting `torch.use_deterministic_algorithms(True)`. If you want PyTorch to use its non-deterministic algorithms on the CPU, please remove the function call from the code.
+| Option | Description | Default |
+| ------ | ----------- | ------- |
+|        |             |         |
+|        |             |         |
+|        |             |         |
+|        |             |         |
 
 
-### Evaluation
-We provide a script that evaluates the trained model of DINES, and reports AUC and Macro-F1 scores on a test dataset.
-This uses `encoder.pt`, `decoder.pt`, and `config.json`; thus, you first need to check tif they are appropriately generated by `./src/run_train.py`. Note that it uses the same random seed used by `./src/run_train.py` where the seed is saved at `config.json` so that the test dataset is valid for the evaluation.
+
+## Results
+
+
+
+## Citation
+
+```javascript
 
 ```
-python src/run_evaluate.py [--<argument name> <argument value>] [...]
-```
 
-We describe the detailed options of `src/run_evaluate.py` in the following table:
-
-|**Option**|**Description**|**Default**|
-|:-:|:-:|:-:|
-|`dataset`|dataset name|BC_ALPHA|
-|`input-dir`|directory path where a pre-trained DINES is stored|./output|
-|`gpu-id`|GPU id; If None, a CPU is used|None|
