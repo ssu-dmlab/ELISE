@@ -52,7 +52,7 @@ The details of the datasets are provided in the following table:
 You can run the simple demo by typing the following command in your terminal:
 ```bash
 cd src
-bash python -m main
+bash python -m main --dataset review
 ```
 
 ## Options
