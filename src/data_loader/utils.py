@@ -42,16 +42,12 @@ def split_data(
 
 
 def load_data(
-    dataset_path: str,
-    direction: bool,
-    node_idx_type: str
+    dataset_path: str
 ) -> np.array:
     """Read data from a file
 
     Args:
         dataset_path (str): dataset_path
-        direction (bool): True=direct, False=undirect
-        node_idx_type (str): "uni" - no intersection with [uid, iid], "bi" - [uid, iid] idx has intersection
 
     Return:
         array_of_edges (array): np.array of edges
@@ -67,28 +63,7 @@ def load_data(
             edgelist.append((a, b, s))
     num_of_nodes = get_num_nodes(np.array(edgelist))
     edgelist = np.array(edgelist)
-
-    if node_idx_type.lower() == "uni":
-        for idx, edge in enumerate(edgelist.tolist()):
-            fr, to, sign = edge
-            edgelist[idx] = (fr, to+num_of_nodes[0], sign)
-        edgelist = np.array(edgelist)
-        assert len(set(edgelist[:, 0].tolist()).intersection(
-            set(edgelist[:, 1].tolist()))) == 0, "something worng"
-
-    # breakpoint()
-    if direction == False:
-        edgelist = edgelist.tolist()
-        # breakpoint()
-        for edges in edgelist:
-            fr, to, sign = edges
-            edgelist.append((to, fr, sign))
-        edgelist = np.array(edgelist)
-        # breakpoint()
     num_edges = np.array(edgelist).shape[0]
-
-    # if node_idx_type.lower() == "bi" and direction == False:
-    #     raise Exception("undirect can not use with bi type.")
 
     return edgelist, num_of_nodes, num_edges
 

@@ -8,9 +8,9 @@ class Decoder(object):
         
         self.param = param
         
-        
-        self.LinkSignClassifier = LinkSignClassifier(
-            self.param["decoder_input_dim"], 1, self.param["num_decoder_layers"]).to(param["device"])
+        if param["num_decoder_layers"] != 0:
+            self.LinkSignClassifier = LinkSignClassifier(
+                self.param["decoder_input_dim"], 1, self.param["num_decoder_layers"]).to(param["device"])
         self.bceloss = torch.nn.BCELoss()
 
     def sign_predict(self, embeddings, edges, eval=False):
@@ -36,17 +36,10 @@ class Decoder(object):
             self.LinkSignClassifier.train()
             
         #emb type check
-        if self.param["node_idx_type"] == "bi":
-            user_emb, item_emb = embeddings
-            src_features = user_emb[edges[:, 0], :] #user
-            dst_features = item_emb[edges[:, 1], :] #item
-        
-        elif self.param["node_idx_type"] == "uni":
-            src_features = embeddings[edges[:, 0], :]
-            dst_features = embeddings[edges[:, 1], :]
-        
-        else:
-            raise ValueError
+
+        user_emb, item_emb = embeddings
+        src_features = user_emb[edges[:, 0], :] #user
+        dst_features = item_emb[edges[:, 1], :] #item
         
         features = torch.cat((src_features, dst_features), dim=1)
         logit = self.LinkSignClassifier(features).squeeze()
@@ -68,8 +61,8 @@ class Decoder(object):
         sign_prob = self.sign_predict(embeddings, train_edges, False) #set eval to False
         assert train_label.shape[0] == sign_prob.shape[0]
         loss = self.bceloss(sign_prob, train_label)
-        sign_loss = loss.item()
         
+        sign_loss = loss.item()
         return loss, sign_loss
 
     def get_link_sign_classifier(self):
