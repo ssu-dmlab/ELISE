@@ -53,7 +53,7 @@ The details of the datasets are provided in the following table:
 You can run the simple demo by typing the following command in your terminal:
 ```bash
 cd src
-python3 main.py --dataset_name review
+python -m main --dataset review
 ```
 
 ## Training
@@ -94,6 +94,3 @@ python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {seed} .
 |**Amazon-DM**| 0.903 | 0.990 | 0.695 | 0.980 |
 
 All experiments are conducted on RTX A5000 (24GB) with cuda version 12.0, and the above results were produced with the random seed `seed=600`.
-
-
-
