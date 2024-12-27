@@ -76,15 +76,16 @@ bash python -m main --dataset review
 | dataset_shuffle     | check the shuffle                                | true           |
 | optimizer           | optimizer name                                   | Adam           |
 
-## Result of Pre-trained ELISE
+## Result of ELISE 
 
-|      |      |      |      |      |
-| ---- | ---- | ---- | ---- | ---- |
-|      |      |      |      |      |
-|      |      |      |      |      |
-|      |      |      |      |      |
+|**Dataset**|**AUC**|**Macro-F1**|**Micro-F1**|**Binary-F1**|
+|:-:|:-:|:-:|:-:|:-:|
+|**Review**|      |      |      |      |
+|**Bonanza**|      |      |      |      |
+|**ml-1m**|      |      |      |      |
+|**Amazon-dm**|      |      |      |      |
 
-
+All experiments are conducted on RTX A5000 (24GB) with cuda version 12.0, and the above results were produced with the random seed `seed=1`.
 
 ## Citation
 
