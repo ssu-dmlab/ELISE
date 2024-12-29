@@ -4,7 +4,7 @@ The paper is submitted to Neural Networks(Elsevier), and is under review:
 ![image](https://github.com/user-attachments/assets/34440249-0d28-4daf-9d57-cea8f3c47e83)
 
 * Effective and Lightweight Representation Learning for Signed Bipartite Graphs <br/>
-  Gyeongmin Gu, Minseo Jeon, Hyun-Je Song, Jinhong Jung<br/>(under review)
+  Gyeongmin Gu*, Minseo Jeon*, Hyun-Je Song, Jinhong Jung<br/>(under review)
 
 
 ## Overview
@@ -63,8 +63,8 @@ cd src
 python -m main --dataset {dataset_name} --num_layers {num_layer} --seed {seed} ...
 ```
 
-## Options
-
+## Options  
+Default configurations for the “Review Dataset”
 | Option              | Description                              | Default        |
 | ------------------- | ---------------------------------------- | -------------- |
 | model               | model name                               | elise          |
