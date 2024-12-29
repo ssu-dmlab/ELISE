@@ -1,10 +1,2 @@
-.config/review/
-.config/ml-1m/
-.config/bonanza/
-.config/amazon-dm/
-.config/review/*
-.config/ml-1m/*
-.config/bonanza/*
-.config/amazon-dm/*
-
+.config/*
 .*/__pycache__/
